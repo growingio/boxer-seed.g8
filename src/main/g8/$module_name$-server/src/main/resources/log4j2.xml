@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="[%d{ISO8601}] [%-5p] [%t#%T] %c#%L - %msg%n"/>
+        </Console>
+
+        <RollingFile name="AppRollingFile" fileName="logs/app.log" filePattern="logs/app-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout pattern="[%d{ISO8601}] [%-5p] [%t#%T] %c#%L - %msg%n"/>
+            <Policies>
+                <CronTriggeringPolicy schedule="0 0 23 * * ?"/>
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name="access" fileName="logs/access.log" filePattern="logs/access-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout pattern="%msg%n"/>
+            <Policies>
+                <CronTriggeringPolicy schedule="0 0 23 * * ?"/>
+            </Policies>
+        </RollingFile>
+        <!--<RollingFile name="ErrorRollingFile" fileName="logs/errors.log"-->
+        <!--filePattern="logs/errors-%d{MM-dd-yyyy}-%i.log.gz">-->
+        <!--<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>-->
+        <!--<Policies>-->
+        <!--<CronTriggeringPolicy schedule="0 0 23 * * ?"/>-->
+        <!--</Policies>-->
+        <!--</RollingFile>-->
+    </Appenders>
+    <Loggers>
+        <Logger name="com.zaxxer.hikari" level="INFO" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <!--<Root level="info">-->
+        <!--<AppenderRef ref="AppRollingFile"/>-->
+        <!--</Root>-->
+        <Root level="INFO">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AppRollingFile"/>
+        </Root>
+        <Logger name="access" level="INFO" additivity="false">
+            <AppenderRef ref="access"/>
+        </Logger>
+    </Loggers>
+</Configuration>
